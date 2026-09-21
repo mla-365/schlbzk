@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Schoolbezoek - Atheneum Caroline Pauwels</title>
+<style>
+  :root {
+    --bg: #faf9f7; --ink: #1f1e1d; --hair: rgba(31,30,29,0.12);
+    --title-bg: rgb(238,237,254); --title-line: rgb(83,74,183); --title-ink: rgb(60,52,137); --title-sub: rgb(83,74,183);
+    --uit-bg: rgb(250,238,218); --uit-line: rgb(133,79,11); --uit-ink: rgb(99,56,6); --uit-sub: rgb(133,79,11);
+    --sleutel-bg: rgb(225,245,238); --sleutel-line: rgb(15,110,86); --sleutel-ink: rgb(8,80,65); --sleutel-sub: rgb(15,110,86);
+    --mee-bg: rgb(234,243,222); --mee-line: rgb(59,109,17); --mee-ink: rgb(39,80,10); --mee-sub: rgb(59,109,17);
+    --scene-bg: rgb(245,235,244); --scene-line: rgb(140,60,120); --scene-ink: rgb(92,36,80); --scene-sub: rgb(140,60,120);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.4; }
+  .page { max-width: 720px; margin: 0 auto; padding: 26px 18px 44px; position: relative; z-index: 45; }
+  .hint { text-align: center; font-size: 12px; letter-spacing: .05em; color: #9a968f; margin-bottom: 14px; }
+
+  .titlecard { background: var(--title-bg); border: 1px solid var(--title-line); border-radius: 13px; padding: 19px 18px; text-align: center; }
+  .titlecard h1 { font-size: 20px; font-weight: 600; color: var(--title-ink); }
+  .titlecard p { font-size: 12.5px; color: var(--title-sub); margin-top: 5px; }
+
+  .section-label { text-align: center; font-size: 14px; font-weight: 600; letter-spacing: .01em; color: #201f1e; margin: 24px 0 13px; }
+  .section-label .sub { display: block; font-size: 11px; font-weight: 400; color: #9a958c; margin-top: 3px; letter-spacing: 0; }
+
+  .grid { display: grid; gap: 13px; }
+  .grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .block { border-radius: 10px; padding: 17px 14px 18px; cursor: pointer; border: 1px solid; text-align: center;
+    transition: transform .14s ease, box-shadow .18s ease; }
+  .block:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+  .block.active { box-shadow: 0 0 0 2px currentColor inset; }
+  .block .bt { font-size: 15px; font-weight: 600; margin-bottom: 4px; line-height: 1.25; }
+  .block .bs { font-size: 12px; line-height: 1.35; }
+
+  .block.uit { background: var(--uit-bg); border-color: var(--uit-line); color: var(--uit-sub); } .block.uit .bt { color: var(--uit-ink); }
+  .block.sleutel { background: var(--sleutel-bg); border-color: var(--sleutel-line); color: var(--sleutel-sub); } .block.sleutel .bt { color: var(--sleutel-ink); }
+  .block.mee { background: var(--mee-bg); border-color: var(--mee-line); color: var(--mee-sub); } .block.mee .bt { color: var(--mee-ink); }
+  .block.scene { background: var(--scene-bg); border-color: var(--scene-line); color: var(--scene-sub); } .block.scene .bt { color: var(--scene-ink); }
+
+  .capstone { margin-top: 24px; border: 1px solid var(--title-line); border-radius: 12px; background: var(--title-bg);
+    padding: 18px 22px; text-align: center; font-size: 12.5px; line-height: 1.6; color: #4a4640; }
+  .capstone .vow { color: var(--title-ink); font-weight: 600; }
+
+  .backdrop { position: fixed; inset: 0; background: rgba(20,18,16,0.28); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 40; }
+  .backdrop.open { opacity: 1; pointer-events: auto; }
+  .drawer { position: fixed; top: 0; right: 0; height: 100%; width: 448px; max-width: 90vw; background: #fff;
+    box-shadow: -6px 0 24px rgba(0,0,0,0.12); transform: translateX(100%); transition: transform .34s cubic-bezier(.4,0,.2,1); z-index: 50; }
+  .drawer.open { transform: translateX(0); }
+  .drawer-inner { padding: 40px 30px; overflow-y: auto; height: 100%; position: relative; }
+  .drawer .cat { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 600; color: #8a857c; margin-bottom: 8px; }
+  .drawer h2 { font-size: 21px; font-weight: 600; margin-bottom: 15px; color: var(--ink); }
+  .drawer p { font-size: 15px; line-height: 1.62; margin-bottom: 12px; color: #33322f; }
+  .drawer .resp { margin-top: 4px; padding: 11px 14px; background: #f4f6ef; border-left: 3px solid var(--mee-line); border-radius: 8px; font-size: 14px; line-height: 1.55; color: #3a4030; }
+  .drawer .resp strong { color: var(--mee-ink); }
+  .drawer-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border: none; border-radius: 50%; background: #f0efec; color: #666; font-size: 18px; cursor: pointer; }
+  .drawer-close:hover { background: #e5e2dc; }
+
+  @media (max-width: 620px) {
+    .grid.g3 { grid-template-columns: 1fr; }
+    .drawer { width: 100%; max-width: 100%; height: 78%; top: auto; bottom: 0; transform: translateY(100%); border-radius: 16px 16px 0 0; }
+    .drawer.open { transform: translateY(0); }
+    .drawer-inner { padding: 34px 22px; }
+  }
+</style>
+</head>
+<body>
+<!-- lean 3-cluster structuur: uitdagingen · sleutelwoorden · wat ik meeneem + klasscène -->
+<div class="page">
+  <div class="hint">klik op een blok voor meer uitleg</div>
+
+  <div class="titlecard">
+    <h1>Atheneum Caroline Pauwels - Molenbeek</h1>
+    <p>Schoolbezoek - Education beyond Borders - UHasselt, maart 2026</p>
+  </div>
+
+  <div class="section-label">Uitdagingen<span class="sub">de realiteit waarin de school werkt - en hoe ze antwoordt</span></div>
+  <div class="grid g3">
+    <div class="block uit" data-key="uit-armoede"><div class="bt">Kansarmoede &amp; context</div><div class="bs">83% armoede-indicator · 65% moeders zonder diploma</div></div>
+    <div class="block uit" data-key="uit-taal"><div class="bt">Taalvraagstuk</div><div class="bs">61% thuis niet-Nederlandstalig</div></div>
+    <div class="block uit" data-key="uit-werkdruk"><div class="bt">Werkdruk &amp; welbevinden</div><div class="bs">Zorgen voor wie zorgt</div></div>
+  </div>
+
+  <div class="section-label">De drie sleutelwoorden<span class="sub">de rode draad door heel de schoolwerking</span></div>
+  <div class="grid g3">
+    <div class="block sleutel" data-key="sleutel-verbinden"><div class="bt">Verbinden</div><div class="bs">Relatie &amp; complicity - de les van Lander</div></div>
+    <div class="block sleutel" data-key="sleutel-versterken"><div class="bt">Versterken</div><div class="bs">Geloof - zelf laten schrijven</div></div>
+    <div class="block sleutel" data-key="sleutel-verwonderen"><div class="bt">Verwonderen</div><div class="bs">Elke les start bij een vraag</div></div>
+  </div>
+
+  <div class="section-label">Wat ik meeneem<span class="sub">naar mijn eigen toekomstige klaspraktijk</span></div>
+  <div class="grid g3">
+    <div class="block mee" data-key="mee-warmte"><div class="bt">Warmte is een keuze</div><div class="bs">Geen vanzelfsprekendheid, maar dagelijks werk</div></div>
+    <div class="block mee" data-key="mee-klasmanagement"><div class="bt">Klasmanagement = welbevinden</div><div class="bs">Time-ins i.p.v. time-outs · preventief</div></div>
+    <div class="block mee" data-key="mee-ingrepen"><div class="bt">Kleine ingrepen, groot effect</div><div class="bs">Manuscripten bewaren maakt groei zichtbaar</div></div>
+  </div>
+
+  <div class="section-label">Een kleine klasscène</div>
+  <div class="grid g1" style="grid-template-columns:1fr;">
+    <div class="block scene" data-key="scene-vos"><div class="bt">“De vos”</div><div class="bs">Een woord waarin een heel patroon van verwachtingen niet werd bevestigd</div></div>
+  </div>
+
+  <div class="capstone">
+    “Onderwijs moet zich presenteren als deel van de oplossing, niet als speelbal van problemen.” <span class="vow">Mijn kinderen zou ik met een gerust hart aan deze school toevertrouwen - en zelf zou ik er graag lesgeven.</span>
+  </div>
+</div>
+
+<div class="backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-inner">
+    <button class="drawer-close" id="closeBtn" aria-label="Sluiten">×</button>
+    <div class="cat" id="dCat"></div>
+    <h2 id="dTitle"></h2>
+    <div id="dBody"></div>
+  </div>
+</aside>
+
+<script>
+const content = {
+  "uit-armoede": { cat:"Uitdagingen", title:"Kansarmoede & context", body:`
+    <p>Molenbeek is een van de dichtstbevolkte Brusselse gemeenten. De directeur schetste de realiteit zonder omwegen: <strong>83% van de leerlingen</strong> voldoet aan de armoede-indicator, en <strong>65% van de moeders</strong> heeft geen diploma secundair onderwijs.</p>
+    <p>Die cijfers bepalen de dagelijkse werking - niet als excuus, maar als gegeven waarmee gewerkt wordt. En toch: het eerste wat je binnenkomend voelt, is warmte. Hoge plafonds, veel licht, en een team dat je met een vanzelfsprekend “we doen dit samen” ontvangt. De pleintjes rond de school maken het gebouw deel van het weefsel van de wijk.</p>
+    <div class="resp"><strong>De school antwoordt met klasroutines.</strong> Heldere, voorspelbare structuren nemen ruis weg en geven rust - een anker van stabiliteit in een context die dat niet vanzelf biedt.</div>` },
+
+  "uit-taal": { cat:"Uitdagingen", title:"Taalvraagstuk", body:`
+    <p>61% van de leerlingen spreekt thuis geen Nederlands. Cummins’ onderscheid tussen alledaagse en academische taalvaardigheid is hier geen theorie maar dagelijkse realiteit: schooltaal is voor velen een tweede taal, die ze al lerend verwerven.</p>
+    <div class="resp"><strong>De school antwoordt met taalontwikkelend lesgeven.</strong> Niet enkel de leerkracht Nederlands, maar elke leerkracht geeft expliciete aandacht aan de taal waarin geleerd wordt. Het is de eerste beleidspijler, geen bijzaak.</div>` },
+
+  "uit-werkdruk": { cat:"Uitdagingen", title:"Werkdruk & welbevinden", body:`
+    <p>De druk op leerkrachten is reëel. Wordt het venster van welbevinden structureel overschreden - door werkdruk, complexe klasdynamiek of beperkte ondersteuning - dan raakt ook de beste leerkracht uit balans. Dat is geen individueel falen, maar een structureel signaal.</p>
+    <div class="resp"><strong>De school antwoordt met brede zorg.</strong> Zorg is een gedeelde opdracht: CLB, opvoeders, leerkrachten en directie vormen samen de schillen rond het klasgebeuren. Geen leraar hoeft alles alleen te dragen - een school moet ook zorgen voor wie zorgt.</div>` },
+
+  "sleutel-verbinden": { cat:"De drie sleutelwoorden", title:"Verbinden", body:`
+    <p>Verbinden gaat over de relatie: tussen leerkracht en leerling, tussen leerlingen onderling, tussen culturen en contexten, en tussen school en buurt.</p>
+    <p>In een les Nederlands (5de jaar) bij Lander werd dat zichtbaar als een <em>dubbele helix</em>: de leerstof staat centraal, maar leren kan enkel via een voortdurende wisselwerking tussen wat de leerkracht inbrengt en wat de leerlingen teruggeven. Een goede les geeft zuurstof - aan het leren en aan de mensen in de klas.</p>
+    <p>Wat je voelt is een stille <em>complicity</em>: niet om partij te trekken, maar om samen te leren, samen verbaasd te zijn, samen verder te komen.</p>` },
+
+  "sleutel-versterken": { cat:"De drie sleutelwoorden", title:"Versterken", body:`
+    <p>Versterken is geloof in de leerling: hoog en concreet. De lat ligt voldoende hoog, en de leerling wordt aangezet om het <em>zelf</em> te doen - bijvoorbeeld door hen echt te laten schrijven.</p>
+    <p>Een klein maar treffend ritueel: de leerkracht Nederlands bewaart de manuscripten waaraan leerlingen werken tot de volgende les. Door opeenvolgende versies naast elkaar te leggen wordt groei zichtbaar - voor de leerkracht en voor de leerling zelf. Procesgerichte feedback die motiveert.</p>` },
+
+  "sleutel-verwonderen": { cat:"De drie sleutelwoorden", title:"Verwonderen", body:`
+    <p>Verwonderen zit in hoe de lessen gebouwd zijn. Of het nu over voeding, economie of Nederlands ging - elke les vertrok van een vraag die verwondering wekt.</p>
+    <p>Leerkrachten moedigen leerlingen aan om zichzelf en elkaar te verwonderen, om vragen te stellen. Nieuwsgierigheid is hier het vertrekpunt, geen bijproduct.</p>` },
+
+  "mee-warmte": { cat:"Wat ik meeneem", title:"Warmte is een keuze", body:`
+    <p>Een warme schoolcultuur is geen vanzelfsprekendheid, maar een bewuste keuze die elke dag opnieuw gemaakt wordt - in de manier waarop een team elkaar en de leerlingen opvangt.</p>
+    <p>Dat neem ik mee als basishouding: warmte en openheid zijn geen zachte franje, maar de grond waarop al het andere kan groeien.</p>` },
+
+  "mee-klasmanagement": { cat:"Wat ik meeneem", title:"Klasmanagement = welbevinden", body:`
+    <p>In Caroline Pauwels zag ik dat klasmanagement en welbevinden geen aparte domeinen zijn, maar twee namen voor hetzelfde: het bewaken van een gedeeld venster waarbinnen leren mogelijk is.</p>
+    <p>Concreet: een gedragskader dat niet straft maar gedrag wil veranderen, en “time-ins” in plaats van time-outs - extra begeleiding voor wie het moeilijk heeft. Succes is preventief: voorkomen dat het venster overschreden wordt, bij de leerling en bij de leerkracht.</p>` },
+
+  "mee-ingrepen": { cat:"Wat ik meeneem", title:"Kleine ingrepen, groot effect", body:`
+    <p>De kleine, slimme praktische ingrepen - zoals het bijhouden van manuscripten - kunnen een groter pedagogisch effect hebben dan grote beleidsplannen.</p>
+    <p>Dat relativeert en bemoedigt tegelijk: je hoeft niet te wachten op een systeemhervorming om morgen iets te veranderen dat er echt toe doet.</p>` },
+
+  "scene-vos": { cat:"Een kleine klasscène", title:"“De vos”", body:`
+    <p>In de les Nederlands van Lander viel die ochtend een korte uitwisseling die me meer is bijgebleven dan menig grote pedagogische demonstratie. Lander vroeg terloops wie zich nog herinnerde welke middeleeuwse tekst ze de vorige les hadden besproken. Een jongen antwoordde zonder aarzelen: “De vos.” Het ging om <em>Van den vos Reynaerde</em>.</p>
+    <p>Op zich een banaal moment. En toch passeerde in dat ene woord een heel patroon van verwachtingen dat <em>niet</em> werd bevestigd. Lander stelde de vraag zonder de stille verwachting die zo makkelijk binnensluipt in een grootstedelijke klas - “ze zullen het wel niet meer weten, het is tenslotte niet hun erfgoed.” En de leerling antwoordde zonder de tegen-verwachting die er ook had kunnen zijn. Beiden weigerden, ongemerkt, een rol te spelen die cliches hun hadden toegeschreven.</p>
+    <p>De jongen kende niet alleen de titel; even later hervatte hij correct het inhoudelijke punt - dat <em>Reynaerde</em> afwijkt van het klassieke schema waarin een verstoorde <em>ordo</em> uiteindelijk hersteld wordt, omdat er in deze tekst van meet af aan geen ordo is. Een fijnzinnige, vrij abstracte observatie - en die was bij deze leerling blijven hangen.</p>
+    <p>Wat me trof, is dat de scène precies blootlegt waar interculturele communicatie het vaakst spaakloopt: niet op werkelijke onverenigbaarheid, maar op de <em>verwachting</em> ervan. Wat ik in Molenbeek zag, was het tegendeel - een minimale, bijna onzichtbare bereidheid aan beide kanten om de ander wel als denkende, betrokken gesprekspartner te behandelen. Communiceren over grenzen heen is in de eerste plaats geen vaardigheid, maar een houding. Dat neem ik mee.</p>` },
+};
+
+const drawer = document.getElementById('drawer'), backdrop = document.getElementById('backdrop');
+let activeEl = null;
+function open(key, el) {
+  const d = content[key]; if (!d) return;
+  document.getElementById('dCat').textContent = d.cat;
+  document.getElementById('dTitle').textContent = d.title;
+  document.getElementById('dBody').innerHTML = d.body;
+  if (activeEl) activeEl.classList.remove('active');
+  el.classList.add('active'); activeEl = el;
+  drawer.classList.add('open'); backdrop.classList.add('open');
+}
+function close() {
+  drawer.classList.remove('open'); backdrop.classList.remove('open');
+  if (activeEl) { activeEl.classList.remove('active'); activeEl = null; }
+}
+document.querySelectorAll('.block').forEach(b => b.addEventListener('click', () => open(b.dataset.key, b)));
+document.getElementById('closeBtn').addEventListener('click', close);
+backdrop.addEventListener('click', close);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+</script>
+</body>
+</html>

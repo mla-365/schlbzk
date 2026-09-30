@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Schoolbezoek - Atheneum Caroline Pauwels</title>
+<title>Atheneum Caroline Pauwels - Education beyond Borders</title>
 <style>
   :root {
     --bg: #faf9f7; --ink: #1f1e1d; --hair: rgba(31,30,29,0.12);
@@ -17,12 +17,16 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.4; }
-  .page { max-width: 720px; margin: 0 auto; padding: 26px 18px 44px; position: relative; z-index: 45; }
-  .hint { text-align: center; font-size: 12px; letter-spacing: .05em; color: #9a968f; margin-bottom: 14px; }
+  .page { max-width: 720px; margin: 0 auto; padding: 8px 18px 44px; position: relative; z-index: 45; }
+  .hint { text-align: center; font-size: 12px; letter-spacing: .05em; color: #9a968f; margin-bottom: 10px; }
 
-  .titlecard { background: var(--title-bg); border: 1px solid var(--title-line); border-radius: 13px; padding: 19px 18px; text-align: center; }
+  .titlecard { background: var(--title-bg); border: 1px solid var(--title-line); border-radius: 13px; padding: 19px 18px; text-align: center;
+    cursor: pointer; transition: transform .14s ease, box-shadow .18s ease; }
+  .titlecard:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+  .titlecard.active { box-shadow: 0 0 0 2px var(--title-line) inset; }
   .titlecard h1 { font-size: 20px; font-weight: 600; color: var(--title-ink); }
   .titlecard p { font-size: 12.5px; color: var(--title-sub); margin-top: 5px; }
+  .titlecard .tc-cta { font-size: 10.5px; letter-spacing: .03em; color: var(--title-sub); opacity: .8; margin-top: 8px; }
 
   .section-label { text-align: center; font-size: 14px; font-weight: 600; letter-spacing: .01em; color: #201f1e; margin: 24px 0 13px; }
   .section-label .sub { display: block; font-size: 11px; font-weight: 400; color: #9a958c; margin-top: 3px; letter-spacing: 0; }
@@ -69,13 +73,14 @@
 </style>
 </head>
 <body>
-<!-- lean 3-cluster structuur: uitdagingen · sleutelwoorden · wat ik meeneem + klasscène -->
+<!-- lean 3-cluster structuur: uitdagingen · sleutelwoorden · wat ik meeneem + klasscène; titelkaart = situering -->
 <div class="page">
   <div class="hint">klik op een blok voor meer uitleg</div>
 
-  <div class="titlecard">
+  <div class="titlecard" data-key="situering">
     <h1>Atheneum Caroline Pauwels - Molenbeek</h1>
-    <p>Schoolbezoek - Education beyond Borders - UHasselt, maart 2026</p>
+    <p><em>Education beyond Borders</em> · Schoolbezoek door Michel Lanssens · UHasselt, maart 2026</p>
+    <div class="tc-cta">klik voor de situering en het opzet</div>
   </div>
 
   <div class="section-label">Uitdagingen<span class="sub">de realiteit waarin de school werkt - en hoe ze antwoordt</span></div>
@@ -121,6 +126,11 @@
 
 <script>
 const content = {
+  "situering": { cat:"Situering", title:"Education beyond Borders", body:`
+    <p>Education beyond Borders is een opdracht binnen de Educatieve Masteropleiding aan UHasselt, gecoördineerd door Lieven Faes. We waren met twee studenten: mijn medestudent Karel Quanten en ikzelf. Samen trokken we naar Brussel voor een driedaagse onderdompeling in het Nederlandstalige grootstedelijke onderwijs.</p>
+    <p>Het vertrekpunt was een workshop van Katelijne Van Lommel over grootstedelijke scholen in Antwerpen en Brussel. Van daaruit legden Lieven, Karel en ik contacten met scholen, en zo konden we concrete afspraken maken met directies, begeleiders en leraren.</p>
+    <p>De onderdompeling liep over drie dagen: een studiedag met Katelijne Van Lommel, een volledige schooldag hier in het Atheneum Caroline Pauwels in Molenbeek, en een personeelsdag in het Atheneum Anderlecht. Deze pagina bundelt wat ik meenam uit die tweede dag.</p>` },
+
   "uit-armoede": { cat:"Uitdagingen", title:"Kansarmoede & context", body:`
     <p>Molenbeek is een van de dichtstbevolkte Brusselse gemeenten. De directeur schetste de realiteit zonder omwegen: <strong>83% van de leerlingen</strong> voldoet aan de armoede-indicator, en <strong>65% van de moeders</strong> heeft geen diploma secundair onderwijs.</p>
     <p>Die cijfers bepalen de dagelijkse werking - niet als excuus, maar als gegeven waarmee gewerkt wordt. En toch: het eerste wat je binnenkomend voelt, is warmte. Hoge plafonds, veel licht, en een team dat je met een vanzelfsprekend “we doen dit samen” ontvangt. De pleintjes rond de school maken het gebouw deel van het weefsel van de wijk.</p>
@@ -181,7 +191,7 @@ function close() {
   drawer.classList.remove('open'); backdrop.classList.remove('open');
   if (activeEl) { activeEl.classList.remove('active'); activeEl = null; }
 }
-document.querySelectorAll('.block').forEach(b => b.addEventListener('click', () => open(b.dataset.key, b)));
+document.querySelectorAll('.block, .titlecard').forEach(b => b.addEventListener('click', () => open(b.dataset.key, b)));
 document.getElementById('closeBtn').addEventListener('click', close);
 backdrop.addEventListener('click', close);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
